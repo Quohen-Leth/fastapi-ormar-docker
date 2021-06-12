@@ -1,3 +1,3 @@
 from database.db import metadata
-from resume.models import Resume
+from book.models import Book
 from user.models import User

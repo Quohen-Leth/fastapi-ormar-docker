@@ -1,9 +1,9 @@
 version: "3.7"
 
 services:
-  db:
+  db_book:
     image: postgres:11
-    container_name: postgres_db
+    container_name: book_postgres_database
     restart: always
     ports:
       - "5432:5432"
@@ -12,11 +12,11 @@ services:
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=resume_database
+      - POSTGRES_DB=database_db
 
-  api:
+  web_book:
     build: .
-    container_name: api
+    container_name: web_book
     command: bash -c "alembic upgrade head && uvicorn main:app --host 0.0.0.0 --port 8000 --reload"
     volumes:
       - static:/code/static
@@ -24,12 +24,10 @@ services:
     ports:
       - "8000:8000"
     depends_on:
-      - db
-    expose:
-      - 8000
+      - db_book
 
   pgadmin:
-    container_name: pgadmin
+    container_name: book_postgres_admin
     image: dpage/pgadmin4
     environment:
       - PGADMIN_DEFAULT_EMAIL=pgadmin4@pgadmin.org
@@ -37,8 +35,8 @@ services:
     ports:
       - "5050:80"
     depends_on:
-      - db
-
+      - db_book
+  
   nginx:
     build:
       context: ./nginx
@@ -49,7 +47,7 @@ services:
     ports:
       - "80:80"
     depends_on:
-      - api
+      - web_book
 
 volumes:
   postgres_volume:

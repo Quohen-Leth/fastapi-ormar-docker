@@ -1,10 +1,10 @@
+import os
 import databases
 import ormar
 import sqlalchemy
-import os
 from dotenv import load_dotenv
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 load_dotenv(os.path.join(BASE_DIR, ".env"))
 db_path = os.environ["DATABASE_URL"]
 

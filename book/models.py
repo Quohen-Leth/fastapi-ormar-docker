@@ -3,16 +3,18 @@ import ormar
 from datetime import datetime
 
 from database.db import MainMeta
+
 from user.models import User
 
 
-class Resume(ormar.Model):
+class Book(ormar.Model):
     id: int = ormar.Integer(primary_key=True)
     title: str = ormar.String(max_length=50)
-    description: str = ormar.String(max_length=500)
-    file: str = ormar.String(max_length=100, default="some file")
+    author: str = ormar.String(max_length=50)
+    published: int = ormar.Integer()
+    pages: int = ormar.Integer()
     create_at: datetime = ormar.DateTime(default=datetime.utcnow)
-    user: Optional[Union[User, Dict]] = ormar.ForeignKey(User)
+    user: Optional[Union[User, Dict]] = ormar.ForeignKey(User, related_name="user")
 
     class Meta(MainMeta):
         pass

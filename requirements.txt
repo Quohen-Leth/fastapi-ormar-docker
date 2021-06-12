@@ -19,7 +19,7 @@ Mako==1.1.4
 MarkupSafe==2.0.1
 ormar==0.10.9
 passlib==1.7.4
-psycopg2==2.8.6
+psycopg2-binary==2.8.6
 pycparser==2.20
 pydantic==1.8.2
 PyJWT==2.1.0

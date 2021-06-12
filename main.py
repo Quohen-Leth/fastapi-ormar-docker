@@ -2,11 +2,13 @@ from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 import uvicorn
 
-from database.db import database
-from resume.api import resume_router
+from database.db import database  # , metadata, engine
+from book.api import book_router
 from user.routers import user_router
 
-app = FastAPI(title="Resume API", description="Simple api for load resume", version="0.1.0")
+app = FastAPI(title="Bookshelf API", description="Simple api to save favorite books", version="0.1.0")
+
+# metadata.create_all(engine)  # первинна ініціалізація бази
 app.state.database = database  # підключення бази
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
@@ -27,7 +29,7 @@ async def shutdown() -> None:
 
 
 app.include_router(user_router)
-app.include_router(resume_router)
+app.include_router(book_router)
 
 if __name__ == '__main__':
-    uvicorn.run('main:app', port=8000, host='0.0.0.0', reload=True)
+    uvicorn.run('main:app', reload=True)
